@@ -11,13 +11,13 @@ const Stay = :O
 Movement = Union{typeof(Left), typeof(Right), typeof(Stay)}
 
 # show a single Movement just as its name
-function Base.show(io::IO, m::Movement)
-  print(io, string(m))
+function as_string(m::Movement)
+  return string(m)
 end
 
 # show a Vector of Movement as “[L, O, …]”
-function Base.show(io::IO, v::Vector{Movement})
-  print(io, "[" * join(string.(v), ", ") * "]")
+function as_string(v::Vector{Movement})
+  return "[" * join(string.(v), ", ") * "]"
 end
 
 # Multy Band TuringMaschine
@@ -128,7 +128,7 @@ function execute_tm(tm::TMK, input::String)
         end
       end
       # Zeige die Aktuelle Regel
-      println("⤷ f($z,$c)  ⟶  ($z´, $c´, $m) \n")
+      println("⤷ f($z,$c)  ⟶  ($z´, $c´, $(as_string(m)) \n")
       # Zustand aktualisieren
       z = z´
       # Positionen aktualisieren
@@ -174,7 +174,7 @@ function execute_tm(tm::TM1, input::String)
     if haskey(tm.f, (z, c))
       (z´, c´, m) = tm.f[(z, c)]
       # Zeige das Band und die Aktuelle Regel
-      println(String(band), " ⟹  f($z,$c)  ⟶  ($z´,$c´,$m)")
+      println(String(band), " ⟹  f($z,$c)  ⟶  ($z´,$c´,$(as_string(m)))")
       # Aktuelle Position auf dem Band
       println(String(fill(' ', pos - 1)), '↑')
       # Zeichen auf dem Band aktualisieren
@@ -226,7 +226,7 @@ function execute_1tm(_1tm::TM1, input::String)
     if haskey(_1tm.f, (z, c))
       (z´, c´, m) = _1tm.f[(z, c)]
       # Zeige das Band und die Aktuelle Regel
-      println(String(band), " ⟹  f($z,$c) → ($z´,$c´,$m)")
+      println(String(band), " ⟹  f($z,$c) → ($z´,$c´,$(as_string(m)))")
       # Aktuelle Position auf dem Band
       println(String(fill(' ', pos - 1)), '↑')
       # Zeichen auf dem Band aktualisieren

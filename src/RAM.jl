@@ -1,7 +1,7 @@
 export set_registers!, execute_ramcode, execute_ramfile
 
 # registers
-R::Vector{Int} = []
+R = Vector{Integer}([])
 
 # execute a = "Ri" <- value
 function set_value(a::String, value::Int)
