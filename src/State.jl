@@ -1,2 +1,2 @@
 # State type
-State::DataType = String
+const State = String

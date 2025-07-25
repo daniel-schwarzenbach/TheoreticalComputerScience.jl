@@ -17,7 +17,7 @@ To install the package, use the Julia package manager:
 
 ``` julia
 using Pkg
-Pkg.add("TheoreticalComputerScience")
+Pkg.add(url="https://github.com/daniel-schwarzenbach/TheoreticalComputerScience.jl")
 ```
 
 ### Usage
