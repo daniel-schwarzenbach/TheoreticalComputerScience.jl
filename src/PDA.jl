@@ -2,14 +2,76 @@ include("State.jl")
 
 export DPDA, NPDA, execute_dpda, execute_npda
 
+"""
 # Deterministic Pushdown Automaton (DPDA)
+
+- `z_0`: The initial state.
+- `f`: `Tuple{String, Char, Char} => Tuple{String, String}`
+
+`ε`: Represents the empty string/character.
+
+``` julia
+# acept all palindromes that are separated by a '|'
+dpda = DPDA(initial_state = "z1", f = Dict([
+  ("z1", 'a', '⊥') => ("z1", "A"),
+  ("z1", 'b', '⊥') => ("z1", "A"),
+  ("z1", 'a', 'A') => ("z1", "AA"),
+  ("z1", 'a', 'B') => ("z1", "BA"),
+  ("z1", 'b', 'A') => ("z1", "AB"),
+  ("z1", 'b', 'B') => ("z1", "BB"),
+  ("z1", '|', 'A') => ("z2", "A"),
+  ("z1", '|', 'B') => ("z2", "B"),
+  ("z2", 'a', 'A') => ("z2", ""),
+  ("z2", 'b', 'B') => ("z2", "")
+ ])
+)
+```
+
+to execute the DPDA, you can use the `execute_dpda` function:
+
+``` julia
+execute_dpda(dpda, "aab|baa")
+```
+
+this will execute every state step by step and return `true` if the input is accepted by the DPDA, or `false` if it is rejected.
+"""
 Base.@kwdef struct DPDA
 	initial_state::State  # start state
 	# f: Z × (Σ ∪ {ε}) × Δ  →  Z × Δ*
 	f::Dict{Tuple{State, Char, Char}, Tuple{State, String}}  
 end
 
+"""
 # Non-deterministic Pushdown Automaton (NPDA)
+
+- `initial_state`: The initial state.
+- `f`: `Tuple{String, Char, Char} => Vector{Tuple{String, String}}`
+
+`ε`: Represents the empty string/character.
+
+``` julia
+# acept all palindromes
+npda = NPDA(initial_state = "z1", f = Dict([
+  ("z1", 'a', '⊥') => [("z1", "A")],
+  ("z1", 'b', '⊥') => [("z1", "B")],
+  ("z1", 'a', 'A') => [("z1", "AA"), ("z2", "AA")],
+  ("z1", 'a', 'B') => [("z1", "BA"), ("z2", "BA")],
+  ("z1", 'b', 'A') => [("z1", "AB"), ("z2", "AB")],
+  ("z1", 'b', 'B') => [("z1", "BB"), ("z2", "BB")],
+  ("z2", 'a', 'A') => [("z2", "")],
+  ("z2", 'b', 'B') => [("z2", "")]
+ ])
+)
+```
+
+to execute the NPDA, you can use the `execute_npda` function:
+
+``` julia
+execute_npda(npda, "aabbaa")
+```
+
+this will execute every state step by step and return `true` if the input is accepted by the NPDA, or `false` if it is rejected.
+"""
 Base.@kwdef struct NPDA
 	initial_state::State  # start state
 	# f: Z × (Σ ∪ {ε}) × Δ  →  P(Z × Δ*)

@@ -1,7 +1,8 @@
 export dya, dya⁻¹
 
 """
- Convert an integer to a dyadic code.
+Convert an integer to a dyadic code.
+
 ````julia
 "0" -> "ε"
 "1" -> "1"
@@ -28,7 +29,8 @@ function dya(n::Integer)::String
 end
 
 """
- Convert a dyadic code to an integer.
+Convert a dyadic code to an integer.
+
 ````julia
 "111" -> 7
 "ε" -> 0
@@ -37,7 +39,7 @@ end
 "11" -> 3
 ````
 """
-function dya⁻¹(s::String)::Int
+function dya⁻¹(s::String)::Integer
 	if s == "ε" || s == ""
 		return 0
 	end

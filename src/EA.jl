@@ -1,14 +1,64 @@
 include("State.jl")
 
 export DEA, NEA, execute_dea, execute_nea
+
+"""
 # Deterministic Finite Automaton (DEA)
+
+- `initial_state`: The initial state.
+- `accepting_states`: The accepting states.
+- `f`: `Tuple{String, Char} => String`
+
+``` julia
+# regex: a*b+
+AB = DEA(initial_state = "za", accepting_states = ["zb"], f = Dict([
+  ("za", 'a') => "za",
+  ("za", 'b') => "zb",
+  ("zb", 'b') => "zb"
+ ])
+)
+```
+
+to execute the DFA, you can use the `execute_dea` function:
+
+``` julia
+execute_dea(AB, "aabbbb")
+```
+
+this will execute every state step by step return `true` if the input is accepted by the DFA, or `false` if it is rejected.
+"""
 Base.@kwdef struct DEA
   initial_state::State  # Startzustand
   accepting_states::Vector{State}  # Endzustände 
   f::Dict{Tuple{State, Char}, State}  # Übergangsfunktion
 end
 
+"""
 # Non-deterministic Finite Automaton (NEA)
+
+- `initial_state`: The initial state.
+- `accepting_states`: The accepting states.
+- `f`: `Tuple{String, Char} => Vector{String}`
+
+``` julia
+ABC = NEA(initial_states = ["za"], accepting_states = ["zb","zc"], f = Dict([
+  ("za", 'a') => ["za", "zb", "zc"],
+  ("zb", 'b') => ["zb"],
+  ("zb", 'c') => ["zc"],
+  ("zc", 'c') => ["zc"],
+  ("za", 'c') => ["zb", "zc"]
+ ])
+)
+```
+
+to execute the NFA, you can use the `execute_nea` function:
+
+``` julia
+execute_nea(ABC, "aaabbc")
+```
+
+this will execute every state step by step and return `true` if the input is accepted by the NFA, or `false` if it is rejected.
+"""
 Base.@kwdef struct NEA
   initial_states::Vector{State}  # Startzustand
   accepting_states::Vector{State}  # Endzustände 

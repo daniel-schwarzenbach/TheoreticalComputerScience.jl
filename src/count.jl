@@ -2,6 +2,13 @@ export n2nxn, nxn2n
 
 """
 bijective function from ℕ -> ℕ²
+
+```julia
+> n2nxn(5)
+(2, 1)
+> nxn2n(2, 1)
+5
+```
 """
 function n2nxn(n::Integer)::Tuple{Integer, Integer}
 	if n < 0
@@ -17,6 +24,13 @@ end
 
 """
 bijective function from ℕ² -> ℕ
+
+```julia
+> n2nxn(5)
+(2, 1)
+> nxn2n(2, 1)
+5
+```
 """
 function nxn2n(x::Integer, y::Integer)::Integer
 	if x < 0 || y < 0

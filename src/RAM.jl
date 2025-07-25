@@ -121,6 +121,12 @@ function execute_ramcode(code::Vector{String})
     println("Final register state: $R \n")
 end
 
+"""
+Set the initial values of the registers.
+````julia
+set_registers!([8, 4, 0, 0]) => # R0 = 8, R1 = 4, R2 = 0, R3 = 0
+````
+"""
 function set_registers!(new_R::Vector{Int})
   global R = new_R
 end
@@ -133,6 +139,31 @@ function fill_in_ram(code::Vector{String})
     end
 end
 
+"""
+Execute a RAM file.
+
+`test.ram:`
+
+``` ram
+0   R2 ← 1
+1   R1 ← R0
+2   R0 ← 0
+3   IF R1 = 0 GOTO 8
+4   R1 ← R1 − R0
+5   R0 ← R0 + R2
+6   R1 ← R1 − R0
+7   GOTO 3
+```
+
+One can execute the File with:
+
+``` julia
+set_registers!([9, 0, 0, 0, 0])
+execute_ramfile("./test.ram")
+```
+
+this will then execute the code line by line.
+"""
 function execute_ramfile(file::String) 
 	lines = readlines(file)
 	cleaned_lines::Vector{String} = []

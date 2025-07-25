@@ -22,10 +22,14 @@ end
 
 # Multy Band TuringMaschine
 """
-no_bands: Number of bands\n
-initial_state: Start state\n
-final_state: End state\n
-f: Transition function
+`no_bands`: Number of bands
+
+`initial_state`: Start state
+
+`final_state`: End state
+
+`f`: `Tuple{String, Vector{Char}} => Tuple{String, Vector{Char}, Vector{Movement}}`
+
 ````julia
 M = TMK(k = 2, z_0 = "z0", z_e = "z1", f = Dict([
 		#z0
@@ -58,9 +62,12 @@ Base.@kwdef struct TMK
 end
 
 """
-initial_state: Start state\n
-final_state: End state\n
-f: Transition function
+initial_state: Start state
+
+final_state: End state
+
+`f`: `Tuple{String, Char} => Tuple{String, Char, Movement}`
+
 ````julia
 M = TMK(k = 2, z_0 = "z0", z_e = "z1", f = Dict([
     #z0
