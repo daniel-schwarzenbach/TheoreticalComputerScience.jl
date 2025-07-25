@@ -28,7 +28,7 @@ Pkg.add(url="https://github.com/daniel-schwarzenbach/TheoreticalComputerScience.
 using TheoreticalComputerScience
 ```
 
-## Turing Machines {#turing-machines}
+## Turing Machines
 
 ### TMK
 
@@ -169,7 +169,7 @@ abbabba ⟹  f(z0,a)  ⟶  (za,□,R)
 final state z1 reached!
 ```
 
-## Pushdown Automata {#pushdown-automata}
+## Pushdown Automata
 
 PDA come in two variants: Nondeterministic and Deterministic.
 
