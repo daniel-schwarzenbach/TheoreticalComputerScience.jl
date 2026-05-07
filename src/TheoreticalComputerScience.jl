@@ -6,5 +6,6 @@ include("EA.jl")
 include("PDA.jl")
 include("RAM.jl")
 include("count.jl")
+include("PRIM.jl")
 
 end

@@ -141,3 +141,18 @@ end
 		@show i, j, k
 	end
 end
+
+@testset "PRIM" begin
+	@show "Testing PRIM functions..."
+	@test C(3, 2)(1,2,3) == 2
+	@test I(4, 3)(10, 20, 30, 40) == 30
+	@test ID(sum)(5) == 10
+	@test LV(md)(5, 10) == 5
+	@test ZV(md)(5, 10) == 5
+	# maxumimum
+	@test ID(ZV(ZV(SUB(sum, md))))(10,9) == 10
+	@test ID(ZV(ZV(SUB(sum, md))))(9,10) == 10
+	# P(x) = md(x, 1)
+	@test PR(C(0,0), I(2,1))(5) == 4
+	@test MIN(SIM2(md, I(2,1), SIM2(prod, I(2,2), I(2,2))))(10) == 4
+end

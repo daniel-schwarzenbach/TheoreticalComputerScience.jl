@@ -8,10 +8,11 @@ This package provides implementations of various theoretical computer science co
 
 - [**Turing Machines**](#turing-machines): A simple implementation of Turing machines.
 - [**Pushdown Automata**](#pushdown-automata): A basic implementation of pushdown automata.
-- [**Finite Atomata**](#finite-automata-ea): An implementation of finite automata.
+- [**Finite Automata**](#finite-automata-ea): An implementation of finite automata.
 - [**Random Access Machines**](#random-access-machines-ram): An implementation of random access machines.
 - [**Dyadic Codes**](#dyadic-codes): Functions to convert between dyadic codes and integers.
 - [**Count Functions**](#count-functions): Bijective functions to convert between natural numbers and pairs of natural numbers.
+- [**Partially Recursive Functions**](#partially-recursive-functions): Base functions and operators for partially recursive functions.
 
 ## Installation
 
@@ -482,3 +483,39 @@ Dyadic codes are a way to represent natural numbers in a binary-like format that
 > nxn2n(2, 1)
 5
 ```
+
+## Partially Recursive Functions
+
+### Base Functions
+
+- $C^n_i(x_1,...,x_n) = i$: `C(n, i)` 
+- $I^n_i(x_1,...,x_n) = x_i$: `I(n, i)`
+- $S(x) = x + 1$: `S(x)`
+- $sum(x, y) = x + y$: `sum(x, y)`
+- $prod(x, y) = x \cdot y$: `prod(x, y)`
+- $md(x, y) = \max(x - y, 0)$: `md(x, y)`
+- $div(x, y) = \lfloor \frac{x}{y} \rfloor$: `div(x, y)`
+- $exp(x, y) = x^y$: `exp(x, y)`
+
+### Operators
+
+- Substitution: `SUB(ϕ, ψ) (x₁,...,xₙ₋₁, y₁,...,yₘ) = ϕ(x₁,...,xₙ₋₁, ψ(y₁,...,yₘ))`
+- Primitive Recursion: `PR(ϕ, ψ) (x₁,...,xₙ, 0) = ϕ(x₁,...,xₙ)` and `PR(ϕ, ψ) (x₁,...,xₙ, y + 1) = ψ(x₁,...,xₙ, y, PR(ϕ, ψ) (x₁,...,xₙ, y))`
+- Minimization: `MIN(ϕ) (x₁,...,xₙ) =` the least y such that `ϕ(x₁,...,xₙ, y) = 0`
+- Swap the Last Variables: `LV(ϕ) (x₁,...,xₙ) = ϕ(x₁,...,xₙ₋₂, xₙ, xₙ₋₁)`
+- Cycling through the Variables: `ZV(ϕ) (x₁,...,xₙ) = ϕ(x₂,...,xₙ, x₁)`
+- Identification of the last Variable: `ID(ϕ)(x₁,...,xₙ) = ϕ(x₁,...,xₙ, xₙ)`
+- Simultaneous Substitution: `SIMn(ϕ, ψ₁,...,ψₙ) (x₁,...,xₘ) = ϕ(ψ₁(x₁,...,xₘ),...,ψₙ(x₁,...,xₘ))` for n = 2, 3, 4
+
+### Examples
+
+```julia
+# max(x, y)
+ID(ZV(ZV(SUB(sum, md))))(10,9) == 10
+ID(ZV(ZV(SUB(sum, md))))(9,10) == 10
+
+# P(x) = md(x, 1)
+PR(C(0,0), I(2,1))(5) == 4
+
+# x ↦ ⌈√x⌉
+MIN(SIM2(md, I(2,1), SIM2(prod, I(2,2), I(2,2))))(10) == 4
