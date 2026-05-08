@@ -1,7 +1,7 @@
 name = "TheoreticalComputerScience"
 uuid = "d35c3a49-a844-4be4-b3bb-7dc759110536"
 authors = ["Daniel Schwarzenbach"]
-version = "1.1.0-DEV"
+version = "1.1.1-DEV"
 
 [compat]
 julia = "1.6.7"

@@ -491,8 +491,8 @@ Dyadic codes are a way to represent natural numbers in a binary-like format that
 - $C^n_i(x_1,...,x_n) = i$: `C(n, i)` 
 - $I^n_i(x_1,...,x_n) = x_i$: `I(n, i)`
 - $S(x) = x + 1$: `S(x)`
-- $sum(x, y) = x + y$: `sum(x, y)`
-- $prod(x, y) = x \cdot y$: `prod(x, y)`
+- $sum(x, y) = x + y$: `psum(x, y)`
+- $prod(x, y) = x \cdot y$: `pprod(x, y)`
 - $md(x, y) = \max(x - y, 0)$: `md(x, y)`
 - $div(x, y) = \lfloor \frac{x}{y} \rfloor$: `div(x, y)`
 - $exp(x, y) = x^y$: `exp(x, y)`
@@ -511,11 +511,11 @@ Dyadic codes are a way to represent natural numbers in a binary-like format that
 
 ```julia
 # max(x, y)
-ID(ZV(ZV(SUB(sum, md))))(10,9) == 10
-ID(ZV(ZV(SUB(sum, md))))(9,10) == 10
+ID(ZV(ZV(SUB(psum, md))))(10,9) == 10
+ID(ZV(ZV(SUB(psum, md))))(9,10) == 10
 
 # P(x) = md(x, 1)
 PR(C(0,0), I(2,1))(5) == 4
 
 # x ↦ ⌈√x⌉
-MIN(SIM2(md, I(2,1), SIM2(prod, I(2,2), I(2,2))))(10) == 4
+MIN(SIM2(md, I(2,1), SIM2(pprod, I(2,2), I(2,2))))(10) == 4

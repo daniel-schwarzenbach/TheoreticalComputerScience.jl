@@ -1,6 +1,4 @@
-export MIN, PR, SUB, SIM2, SIM3, SIM4, ID, LV, ZV, I, C, S, md
-
-import Base: sum, prod
+export MIN, PR, SUB, SIM2, SIM3, SIM4, ID, LV, ZV, I, C, S, md, psum, pprod
 
 """
 MIN(φ) = the least y such that φ(args..., y) = 0
@@ -109,11 +107,11 @@ Increment, S(x) = x + 1
 """
 S(x) = x + 1
 
-sum(x, y) = x + y
+psum(x, y) = x + y
 
 md(x, y) = max(x - y, 0)
 
-prod(x, y) = x * y
+pprod(x, y) = x * y
 
 function div(x, y)
   if y == 0
